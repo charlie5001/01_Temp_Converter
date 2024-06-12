@@ -16,7 +16,9 @@ class Converter:
                                         padx=10, pady=10)
         self.temp_converter_label.grid(row=0)
         
-
+        # Help Button (row 1)
+        self.help_button = Button(self.converter_frame, text="help", padx=10, pady=10)
+        self.help_button.grid(row=1)
 
 # main routine
 if __name__ == "__main__":
