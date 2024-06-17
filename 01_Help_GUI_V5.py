@@ -22,7 +22,7 @@ class Converter:
                                              "converted and then push "
                                              "one of the buttons below...",
                                              font="Arial 10 italic", wrap=250, justify=LEFT, bg = background_color, padx=10, pady=10)
-        self.temp_instructions_label(row=1)
+        self.temp_instructions_label.grid(row=1)
 
         #Temperature entry box (row 2)
 
@@ -32,7 +32,7 @@ class Converter:
                                   padx=10, pady=10, 
                                   command=self.help)
     
-        self.help_button.grid(row=1)
+        self.help_button.grid(row=3)
 
     def help(self):
         print("You asked for help")

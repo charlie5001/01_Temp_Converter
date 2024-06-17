@@ -25,15 +25,27 @@ class Converter:
         self.temp_instructions_label.grid(row=1)
 
         #Temperature entry box (row 2)
+        self.to_convert_entry = Entry(self.converter_frame, width=20, font="Arial 14 bold")
+        self.to_convert_entry(row=2)
 
         #conversion buttons frame (row 3)
+        self.conversion_buttons_frame = Frame(self.converter_frame)
+        self.conversion_buttons_frame.grid(row=3, pady=10)
+
+        self.to_c_button = Button(self.converter_frame, text="To Centigrade", font="Arial 10 Bold", bg="Khaki", padx=10, pady=10)
+        self.conversion_buttons_frame.grid(row=3, pady=10)
+
+
+
+        #Answer Label (row 4)
+
+        #History / Help button frame (row 5)
         self.help_button = Button(self.converter_frame,
                                   text="Help", font=("Arial", "14"),
                                   padx=10, pady=10, 
                                   command=self.help)
     
         self.help_button.grid(row=1)
-
     def help(self):
         print("You asked for help")
         get_help = Help(self)
