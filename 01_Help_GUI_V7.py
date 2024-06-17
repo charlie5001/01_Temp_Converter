@@ -32,10 +32,8 @@ class Converter:
         self.conversion_buttons_frame = Frame(self.converter_frame)
         self.conversion_buttons_frame.grid(row=3, pady=10)
 
-        self.to_c_button = Button(self.converter_frame, text="To Centigrade", font="Arial 10 Bold", bg="Khaki", padx=10, pady=10)
-        self.conversion_buttons_frame.grid(row=3, pady=10)
-
-
+        self.to_c_button = Button(self.conversion_buttons_frame, text="To Centigrade", font="Arial 10 Bold", bg="Khaki", padx=10, pady=10)
+        self.to_c_button.grid(row=0, pady=0)
 
         #Answer Label (row 4)
 
