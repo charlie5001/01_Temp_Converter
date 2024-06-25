@@ -8,6 +8,9 @@ class Converter:
         # Formatting variables...
         background_color = "light blue"
 
+        #Initialse list to hold calcuation history
+        self.all_calculations = []
+
         # Converter Main Screen GUI...
         self.converter_frame = Frame(width=300,  height=1200, bg=background_color)
         self.converter_frame.grid()
@@ -85,9 +88,10 @@ class Converter:
                 answer = "{} degrees C is {} degrees F".format(to_convert, celcius)
 
             else:
-                answer = "Too Cold!"
+                answer = "Too Cold"
                 has_errors = "yes"
-            
+            #Display answer
+
             if has_errors == "no":
                 self.converted_label.configure(text=answer, fg="blue")
                 self.to_convert_entry.configure(bg="white")
@@ -95,11 +99,11 @@ class Converter:
                 self.converted_label.configure(text=answer, fg="red")
                 self.to_convert_entry.configure(bg=error)
 
-        # Round!!
-
+            if answer != "Too Cold":
+                self.all_calculations.append(answer)
+                print(self.all_calculations)
                 
 
-        #Display answer
 
         #Add answer to list for History
         except ValueError:
