@@ -41,9 +41,9 @@ class Converter:
         self.export_button.grid(row=1)
  
     def export(self):
-        get_export = export(self)
+        get_export = Export(self)
 
-class export:
+class Export:
     def __init__(self, partner):
         background = "#a9ef99"
 
