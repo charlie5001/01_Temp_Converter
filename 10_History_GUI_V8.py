@@ -6,7 +6,7 @@ class Converter:
     def __init__(self, parent):
         # Formatting variables...
         background_color = "light blue"
-        self.all_calc_list = ['some test data', 'some test data',
+        self.all_calculations = ['some test data', 'some test data',
                               'some test data','some test data',
                               'some test data','some test data',]
         # Converter Main Screen GUI...
@@ -36,8 +36,11 @@ class Converter:
         self.history_button = Button(self.converter_frame,
                                   text="history", font=("Arial", "14"),
                                   padx=10, pady=10, 
-                                  command= lambda:self.history(self.all_calc_list))
+                                  command= lambda:self.history(self.all_calculations))
         self.history_button.grid(row=1)
+
+        if len(self.all_calculations) == 0:
+            self.history_button.config(state=DISABLED)
 
 
     def history(self, calc_history):
