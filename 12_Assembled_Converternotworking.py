@@ -1,15 +1,14 @@
-
 from tkinter import *
 from functools import partial
-import random
 import re
+
 class Converter:
-    def __init__(self, parent):
+    def __init__(self, partner):
         # Formatting variables...
         background_color = "light blue"
 
         #Initialse list to hold calcuation history
-        self.all_calculations = []
+        self.calc_history = []
 
         # Converter Main Screen GUI...
         self.converter_frame = Frame(width=300,  height=1200, bg=background_color)
@@ -52,13 +51,28 @@ class Converter:
         self.hist_help_frame.grid(row=5, pady=10)
 
         self.history_button = Button(self.hist_help_frame, font="Arial 12 bold",
-                                        text="Calculation History", width=15, command=lambda: self.history(self.all_calculations))
+                                        text="Calculation History", width=15, command=lambda: self.history(self.calc_history))
         self.history_button.grid(row=0, column=0)
-        if len(self.all_calculations) == 0:
+        if len(self.calc_history) == 0:
             self.history_button.config(state=DISABLED)
         self.help_button = Button(self.hist_help_frame, font="Arial 12 bold",
-                                  text="Help", width=5)
+                                  text="Help", width=5, command=self.help)
         self.help_button.grid(row=0, column=1)
+
+
+
+
+    def help(self):
+        get_help = help(self)
+        get_help.help_text.configure(text="Please enter a number in the box "
+                                     "and then push one of the buttons "
+                                     "to convert the number to either "
+                                     "degrees C or degrees F. \n\n"
+                                     "The calculation History area shows "
+                                     "up to seven past calculations "
+                                     "(most recent at the top). \n\n You can"
+                                     "also export your full calculation "
+                                     "history to a text file if desired.")
 
 
     def temp_convert(self, low):
@@ -101,8 +115,8 @@ class Converter:
                 self.to_convert_entry.configure(bg=error)
 
             if has_errors != "yes":
-                self.all_calculations.append(answer)
-                print(self.all_calculations)
+                self.calc_history.append(answer)
+                print(self.calc_history)
                 self.history_button.config(state=NORMAL)
         
 
@@ -130,6 +144,43 @@ class Converter:
 
     def history(self, calc_history):
         History(self, calc_history)
+
+
+
+
+
+class help:
+    def __init__(self, partner):
+        background = "orange"
+
+        #disable help button
+        partner.help_button.config(state=DISABLED)
+
+        #sets up child window ie help box
+        self.help_box = Toplevel()
+
+        #If users press cross at top, closes help and 'releases' help button
+        self.help_box.protocol("WM_DELETE_WINDOW", partial(self.close_help, partner))
+
+        #set up gui frame
+        self.help_frame = Frame(self.help_box, bg=background)
+        self.help_frame.grid()
+        #set up help heading (row 0)
+        self.how_heading = Label(self.help_frame, text="help / Instructions",font="arial 14 bold", bg=background)
+        self.how_heading.grid(row=0)
+        #help text (label, row 1)
+        self.help_text = Label(self.help_frame, text="", justify=LEFT, width=40, bg=background, wrap=250)
+        self.help_text.grid(row=1)
+        #dismiss button (row 2)
+        self.dismiss_button = Button(self.help_frame,
+                            text="Dismiss", font=("Arial 10 bold"),
+                            padx=10, pady=10, 
+                            command=partial(self.close_help, partner))
+        self.dismiss_button.grid(row=2, pady=10)
+    def close_help(self, partner):
+        #Put help button back to normal...
+        partner.help_button.config(state=NORMAL)
+        self.help_box.destroy()
 
 class History:
     def __init__(self, partner, calc_history):
@@ -231,6 +282,11 @@ class Export:
                                     font="Arial 14 bold", justify=CENTER)
         self.filename_entry.grid(row=3, pady=10)
 
+        #Error message labels
+        self.save_error_label = Label(self.export_frame, text="", fg="maroon", bg=background)
+        self.save_error_label.grid(row=4)
+
+
         #Save / Cancel Frame
         self.save_cancel_frame = Frame(self.export_frame)
         self.save_cancel_frame.grid(row=5, pady=10)
@@ -245,6 +301,7 @@ class Export:
         #Put export button back to normal...
         partner.export_button.config(state=NORMAL)
         self.export_box.destroy()
+    
     def save_history(self, partner, calc_history):
         valid_char = "[A-Za-z0-9]"
         has_error = "no"
@@ -286,6 +343,38 @@ class Export:
 
             self.close_export(partner)
 
+
+    def __init__(self, partner):
+        background = "orange"
+
+        #disable help button
+        partner.help_button.config(state=DISABLED)
+
+        #sets up child window ie help box
+        self.help_box = Toplevel()
+
+        #If users press cross at top, closes help and 'releases' help button
+        self.help_box.protocol("WM_DELETE_WINDOW", partial(self.close_help, partner))
+
+        #set up gui frame
+        self.help_frame = Frame(self.help_box, bg=background)
+        self.help_frame.grid()
+        #set up help heading (row 0)
+        self.how_heading = Label(self.help_frame, text="help / Instructions",font="arial 14 bold", bg=background)
+        self.how_heading.grid(row=0)
+        #help text (label, row 1)
+        self.help_text = Label(self.help_frame, text="", justify=LEFT, width=40, bg=background, wrap=250)
+        self.help_text.grid(row=1)
+        #dismiss button (row 2)
+        self.dismiss_button = Button(self.help_frame,
+                            text="Dismiss", font=("Arial 10 bold"),
+                            padx=10, pady=10, 
+                            command=partial(self.close_help, partner))
+        self.dismiss_button.grid(row=2, pady=10)
+    def close_help(self, partner):
+        #Put help button back to normal...
+        partner.help_button.config(state=NORMAL)
+        self.help_box.destroy()
 # main routine
 if __name__ == "__main__":
     root = Tk()
